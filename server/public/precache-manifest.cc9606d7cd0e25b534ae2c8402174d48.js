@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/about.8b816af1.css"
   },
   {
-    "revision": "f0b91d7277b68c754637",
+    "revision": "058dd551cf437787d00f",
     "url": "/css/app.e971fdd8.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/pickleball.95afddd9.jpg"
   },
   {
-    "revision": "fd3ef6dc2b4ad336bc89313d02aa0d25",
+    "revision": "530d94153251a6c6472a89989396a3a3",
     "url": "/index.html"
   },
   {
@@ -28,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/about.c2f5cce3.js"
   },
   {
-    "revision": "f0b91d7277b68c754637",
-    "url": "/js/app.4e31cb90.js"
+    "revision": "058dd551cf437787d00f",
+    "url": "/js/app.0515c30b.js"
   },
   {
     "revision": "fc67d5fe74d538eb9b76",

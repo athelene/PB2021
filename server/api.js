@@ -40,15 +40,6 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-//Handle production
-if(process.env.NODE_ENV === 'production') {
-  //static folder
-  app.use(express.static(__dirname + '/public/'))
-
-  //handle SPA
-  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
-}
-
 //AUTHENTICATION ROUTES
 
 app.get('/login', function async (req, res) {
@@ -577,6 +568,14 @@ app.get('/getPlayerGroups', function (req, res) {
 })  
 })
 
+//Handle production
+if(process.env.NODE_ENV === 'production') {
+  //static folder
+  app.use(express.static(__dirname + '/public/'))
+
+  //handle SPA
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
 
 var port = process.env.PORT || 8700;
 app.listen(port);
