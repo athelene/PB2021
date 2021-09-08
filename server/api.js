@@ -27,7 +27,7 @@ var router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: true}));
 
-app.use("/", router);
+app.use("/api", router);
 
 router.use((request,response,next) => {
     console.log('middleware up');
