@@ -27,7 +27,7 @@ var router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: true}));
 
-app.use("/api", router);
+//app.use("/api", router);
 app.use("/", router);
 
 router.use((request,response,next) => {
