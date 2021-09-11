@@ -4,6 +4,7 @@ var hourOps = require('./hourOps');
 var games = require('./games');
 var standingGames = require('./standingGames');
 var groups = require('./groups');
+var players = require('./players');
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -36,7 +37,7 @@ router.use((request,response,next) => {
 })
 
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  res.send('Hello Big Wide World!')
 })
 
 //AUTHENTICATION ROUTES
@@ -58,13 +59,16 @@ app.get('/register', function (req, res) {
   var userDisplayName = req.query.userDisplayName;
   var userFirst = req.query.userFirst;
   var userLast = req.query.userLast;
+  var userPhoneAreaCode = req.query.userLast;
+  var userPhonePrefix = req.query.userLast;
+  var userPhoneLine = req.query.userLast;
   var saltRounds = 10;
   console.log('email ', userEmail, 'password ', userPassword, 'displayname: ', userDisplayName, 'first ', userFirst, 'last ', userLast);
   bcrypt.hash(userPassword, saltRounds, function(err, hash) {
   let value = hash; // hash to send
   console.log('hash is: ', hash)
   //  Now add to the DB
-        authenticationOps.newUser(userEmail, userDisplayName, userFirst, userLast, hash).then(result => {
+        authenticationOps.newUser(userEmail, userDisplayName, userFirst, userLast, userPhoneAreaCode, userPhonePrefix, userPhoneLine, hash).then(result => {
         const list = result;
         console.log('result is:', list);
        res.send(list) 
@@ -563,6 +567,25 @@ app.get('/getPlayerGroups', function (req, res) {
   var userID = req.query.userID;
     groups.getPlayerGroups(userID).then(result => {
       console.log('playerGroups result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+//GET Players
+app.get('/getPlayers', function (req, res) {
+  console.log('about to getPlayers')
+    players.getPlayers().then(result => {
+      console.log('players result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+//GET Players groups by player
+app.get('/getPlayerGroupsbyPlayer', function (req, res) {
+  console.log('about to getPlayerGroupsbyPlayer')
+  var userID = req.query.userID;
+    players.getPlayerGroupsbyPlayer(userID).then(result => {
+      console.log('playerGroupsbyPlayer result from azure is:', result);
      res.send(result) 
 })  
 })
