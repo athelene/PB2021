@@ -35,7 +35,7 @@ async function dupCheck(userEmail) {
     }
 }
 
-async function newUser(userEmail, userDisplayName, userFirst, userLast, hash) {
+async function newUser(userEmail, userDisplayName, userFirst, userLast, userPhoneAreaCode, userPhonePrefix, userPhoneLine, hash) {
     try{
         console.log('about to connect to newSubscriber in sql');
         let pool = await sql.connect(config);
@@ -44,7 +44,10 @@ async function newUser(userEmail, userDisplayName, userFirst, userLast, hash) {
         myproc.input('userHash', sql.VarChar(75), hash)
         myproc.input('userFirst', sql.VarChar(75), userFirst)
         myproc.input('userLast', sql.VarChar(75), userLast)
-        myproc.input('userDisplayName', sql.VarChar(75), userDisplayName)
+        myproc.input('userDisplayName', sql.VarChar(3), userDisplayName)
+        myproc.input('userPhoneAreaCode', sql.VarChar(75), userPhoneAreaCode)
+        myproc.input('userPhonePrefix', sql.VarChar(3), userPhonePrefix)
+        myproc.input('userPhoneLine', sql.VarChar(3), userPhoneLine)
         let userQry = await myproc.execute("newSubscriber")
         let user = userQry.recordset;
         return user;
