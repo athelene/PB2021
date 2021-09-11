@@ -29,7 +29,7 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true}));
 
 //app.use("/api", router);
-app.use("/api", router);
+app.use("/", router);S
 
 router.use((request,response,next) => {
     console.log('middleware up');
@@ -285,7 +285,7 @@ app.get('/getGameList', function (req, res) {
 })
 
 //GET FULL LIST OF GAMES
-app.get('/getFullGameList', function (req, res) {
+app.get('/api/getFullGameList', function (req, res) {
   console.log('about to getFullGameList')
 
     games.getFullGameList().then(result => {
@@ -295,7 +295,7 @@ app.get('/getFullGameList', function (req, res) {
 })
 
 //GET LIST OF Players
-app.get('/getGamePlayers', function (req, res) {
+app.get('/api/getGamePlayers', function (req, res) {
   console.log('about to getGamePlayers')
   var gameID = req.query.gameID;
     games.getGamePlayers(gameID).then(result => {
@@ -305,7 +305,7 @@ app.get('/getGamePlayers', function (req, res) {
 })
 
 //GET PlayerStatus for given game
-app.get('/getPlayerStatus', function (req, res) {
+app.get('/api/getPlayerStatus', function (req, res) {
   console.log('about to getPlayerStatus')
   var gameID = req.query.gameID;
   var userID = req.query.userID;
@@ -329,7 +329,7 @@ app.get('/changePlayerStatus', function (req, res) {
 })
 
 //GET game notes for given game
-app.get('/getGameNotes', function (req, res) {
+app.get('/api/getGameNotes', function (req, res) {
   console.log('about to getGameNotes')
   var gameID = req.query.gameID;
   console.log('api start, userid: ', gameID)
