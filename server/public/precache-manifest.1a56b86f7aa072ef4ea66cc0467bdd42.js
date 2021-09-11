@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/apple-touch-icon.png"
   },
   {
-    "revision": "65b68e4be0ec39a2bd89",
-    "url": "/css/about.5b596d07.css"
+    "revision": "ebc4195b259f242c960f",
+    "url": "/css/about.aa72b667.css"
   },
   {
-    "revision": "9dbfbffcc1b2ea2ec95d",
-    "url": "/css/app.a27c4e3f.css"
+    "revision": "3ea85706fee39130e5f3",
+    "url": "/css/app.86c12120.css"
   },
   {
     "revision": "ed92537844e3896ec1a0",
@@ -44,16 +44,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/pickleball.95afddd9.jpg"
   },
   {
-    "revision": "0604f497309b820753c298c4d323217c",
+    "revision": "9c9407b8f353f1cdb74679da5672dba4",
     "url": "/index.html"
   },
   {
-    "revision": "65b68e4be0ec39a2bd89",
-    "url": "/js/about.37370647.js"
+    "revision": "ebc4195b259f242c960f",
+    "url": "/js/about.72f68191.js"
   },
   {
-    "revision": "9dbfbffcc1b2ea2ec95d",
-    "url": "/js/app.a559446a.js"
+    "revision": "3ea85706fee39130e5f3",
+    "url": "/js/app.d0f243fa.js"
   },
   {
     "revision": "ed92537844e3896ec1a0",
