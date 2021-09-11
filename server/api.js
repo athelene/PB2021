@@ -263,7 +263,7 @@ app.get('/getAllGroups', function (req, res) {
 })
 
 //GET LIST OF COURTS
-app.get('/getCourts', function (req, res) {
+app.get('/api/getCourts', function (req, res) {
   console.log('about to getCourts')
     hourOps.getCourts().then(result => {
       console.log('user result from azure is:', result);
