@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
 
 //AUTHENTICATION ROUTES
 
-app.get('/login', function async (req, res) {
+app.get('/api/login', function async (req, res) {
   var userEmail = req.query.userEmail;
   var userPassword = req.query.userPassword;
   console.log('about to start login (mylogin) in authenticationOps', 'userEmail: ', userEmail, 'userPassword: ', userPassword);
@@ -53,7 +53,7 @@ app.get('/login', function async (req, res) {
 })
 })
 
-app.get('/register', function (req, res) {
+app.get('/api/register', function (req, res) {
   var userEmail = req.query.userEmail;
   var userPassword = req.query.userPassword;
   var userDisplayName = req.query.userDisplayName;
@@ -76,7 +76,7 @@ app.get('/register', function (req, res) {
   })
 })
 //WORKING 2021-03-34
-app.get('/user', function (req, res) {
+app.get('/api/user', function (req, res) {
     var userEmail = req.query.userEmail;
     console.log('about to start getUser in dboperations')
     console.log('userEmail from url is: ', userEmail);
@@ -86,7 +86,7 @@ app.get('/user', function (req, res) {
 })  
 })
 //WORKING 2021-03-24
-app.get('/dupcheck', function (req, res) {
+app.get('/api/dupcheck', function (req, res) {
     var userEmail = req.query.userEmail;
     console.log('about to start dupCheck in dboperations')
     console.log('userEmail from url is: ', userEmail);
@@ -137,7 +137,7 @@ app.get('/api/auth', function (req, res) {
 })
 
 //GET HOURS AVAILABLE FOR COURT ON GIVEN DATE
-app.get('/hourStatus', function (req, res) {
+app.get('/api/hourStatus', function (req, res) {
   var gameDate = req.query.gameDate;
   var gameCourt = req.query.gameCourt;
   console.log('about to start hourStatus')
@@ -149,7 +149,7 @@ app.get('/hourStatus', function (req, res) {
 })
 
 //GET LIST OF HOURS
-app.get('/getHourList', function (req, res) {
+app.get('/api/getHourList', function (req, res) {
   console.log('about to getHourList')
     hourOps.getHourList().then(result => {
       console.log('user result from azure is:', result);
@@ -158,7 +158,7 @@ app.get('/getHourList', function (req, res) {
 })
 
 //GET GROUPS for this user
-app.get('/getGroups', function (req, res) {
+app.get('/api/getGroups', function (req, res) {
   var userID = req.query.userID;
   console.log('about to start getGroups')
     groups.getGroups(userID).then(result => {
@@ -168,7 +168,7 @@ app.get('/getGroups', function (req, res) {
 })
 
 //GET GROUPS for this user
-app.get('/deleteGroup', function (req, res) {
+app.get('/api/deleteGroup', function (req, res) {
   var groupID = req.query.groupID;
   console.log('about to start deleteGroups')
     groups.deleteGroup(groupID).then(result => {
@@ -178,7 +178,7 @@ app.get('/deleteGroup', function (req, res) {
 })
 
 //GET ALL GROUPS for Group Page
-app.get('/newGroup', function (req, res) {
+app.get('/api/newGroup', function (req, res) {
   var groupName = req.query.groupName;
   var groupTypeID = req.query.groupTypeID;
   var groupDescription = req.query.groupDescription;
@@ -190,7 +190,7 @@ app.get('/newGroup', function (req, res) {
 })
 
 //GET ALL GROUPS for Group Page
-app.get('/editGroup', function (req, res) {
+app.get('/api/editGroup', function (req, res) {
   var groupID = req.query.groupID;
   var groupName = req.query.groupName;
   var groupTypeID = req.query.groupTypeID;
@@ -202,7 +202,7 @@ app.get('/editGroup', function (req, res) {
 })
 
 //GET GROUP for editing
-app.get('/getGroup', function (req, res) {
+app.get('/api/getGroup', function (req, res) {
   var groupID = req.query.groupID;
   console.log('about to start getGroup')
     groups.getGroup(groupID).then(result => {
@@ -212,7 +212,7 @@ app.get('/getGroup', function (req, res) {
 })
 
 //GET Player GROUP Status for editing list of players
-app.get('/getPlayerGroupStatus', function (req, res) {
+app.get('/api/getPlayerGroupStatus', function (req, res) {
   var groupID = req.query.groupID;
   console.log('about to start getPlayerGroupStatus')
     groups.getPlayerGroupStatus(groupID).then(result => {
@@ -222,7 +222,7 @@ app.get('/getPlayerGroupStatus', function (req, res) {
 })
 
 //Add Player to GROUP
-app.get('/addToGroup', function (req, res) {
+app.get('/api/addToGroup', function (req, res) {
   var groupID = req.query.groupID;
   var userID = req.query.userID;
   console.log('about to start addToGroup')
@@ -233,7 +233,7 @@ app.get('/addToGroup', function (req, res) {
 })
 
 //Remove Player from GROUP
-app.get('/removeFromGroup', function (req, res) {
+app.get('/api/removeFromGroup', function (req, res) {
   var groupID = req.query.groupID;
   var userID = req.query.userID;
   console.log('about to start removeFromGroup')
@@ -244,7 +244,7 @@ app.get('/removeFromGroup', function (req, res) {
 })
 
 //GET ALL GROUP Types for Group Page
-app.get('/getGroupTypes', function (req, res) {
+app.get('/api/getGroupTypes', function (req, res) {
   console.log('about to start getGroupTypes')
     groups.getGroupTypes().then(result => {
       console.log('user result from azure is:', result);
@@ -253,7 +253,7 @@ app.get('/getGroupTypes', function (req, res) {
 })
 
 //GET ALL GROUPS for Group Page
-app.get('/getAllGroups', function (req, res) {
+app.get('/api/getAllGroups', function (req, res) {
   var userID = req.query.userID;
   console.log('about to start getAllGroups')
     groups.getAllGroups(userID).then(result => {
@@ -272,7 +272,7 @@ app.get('/api/getCourts', function (req, res) {
 })
 
 //GET LIST OF GAMES
-app.get('/getGameList', function (req, res) {
+app.get('/api/getGameList', function (req, res) {
   console.log('about to getGameList')
   var gameDate = req.query.gameDate;
   var gameCourt = req.query.gameCourt;
@@ -317,7 +317,7 @@ app.get('/api/getPlayerStatus', function (req, res) {
 })
 
 //Change PlayerStatus for given game
-app.get('/changePlayerStatus', function (req, res) {
+app.get('/api/changePlayerStatus', function (req, res) {
   console.log('about to getPlayerStatus')
   var gameID = req.query.gameID;
   var userID = req.query.userID;
@@ -340,7 +340,7 @@ app.get('/api/getGameNotes', function (req, res) {
 })
 
 //DELETE game notes for given game
-app.get('/deleteGameNote', function (req, res) {
+app.get('/api/deleteGameNote', function (req, res) {
   console.log('about to deleteGameNote')
   var gameNoteID = req.query.gameNoteID;
   console.log('api start, userid: ', gameNoteID)
@@ -351,7 +351,7 @@ app.get('/deleteGameNote', function (req, res) {
 })
 
 //ADD game notes for given game
-app.get('/addNote', function (req, res) {
+app.get('/api/addNote', function (req, res) {
   console.log('about to getGameNotes')
   var gameID = req.query.gameID;
   var userID = req.query.userID;
@@ -364,7 +364,7 @@ app.get('/addNote', function (req, res) {
 })
 
 //SAVE SINGLE GAME
-app.get('/savegame', function (req, res) {
+app.get('/api/savegame', function (req, res) {
   console.log('api is getting: ', req.query)
   var gameStart = req.query.gameStart;
   var gameEnd = req.query.gameEnd;
@@ -379,7 +379,7 @@ app.get('/savegame', function (req, res) {
 })
 
 //Edit SINGLE GAME
-app.get('/editgame', function (req, res) {
+app.get('/api/editgame', function (req, res) {
   console.log('api is getting: ', req.query)
   var gameID = req.query.gameID;
   var gameStart = req.query.gameStart;
@@ -396,7 +396,7 @@ app.get('/editgame', function (req, res) {
 })
 
 //GET LIST OF Standing GAMES
-app.get('/getStandingGameList', function (req, res) {
+app.get('/api/getStandingGameList', function (req, res) {
   console.log('about to getStandingGameList')
 
     standingGames.getStandingGameList().then(result => {
@@ -406,7 +406,7 @@ app.get('/getStandingGameList', function (req, res) {
 })
 
 //SAVE STANDING GAME
-app.get('/savestandinggame', function (req, res) {
+app.get('/api/savestandinggame', function (req, res) {
   console.log('api is getting: ', req.query)
   var gameStart = req.query.gameStart;
   var gameEnd = req.query.gameEnd;
@@ -423,7 +423,7 @@ app.get('/savestandinggame', function (req, res) {
 })
 
 //DELETE Standing game 
-app.get('/deleteStandingGame', function (req, res) {
+app.get('/api/deleteStandingGame', function (req, res) {
   console.log('about to deleteGame')
   var standingGameID = req.query.standingGameID;
   console.log('api start, standingGameid: ', standingGameID)
@@ -434,7 +434,7 @@ app.get('/deleteStandingGame', function (req, res) {
 })
 
 //Edit Standing GAME
-app.get('/editStandingGame', function (req, res) {
+app.get('/api/editStandingGame', function (req, res) {
   console.log('api is getting: ', req.query)
   var gameID = req.query.gameID;
   var gameStart = req.query.gameStart;
@@ -452,7 +452,7 @@ app.get('/editStandingGame', function (req, res) {
 })
 
 //DELETE game 
-app.get('/deleteGame', function (req, res) {
+app.get('/api/deleteGame', function (req, res) {
   console.log('about to deleteGame')
   var gameID = req.query.gameID;
   console.log('api start, gameid: ', gameID)
@@ -463,7 +463,7 @@ app.get('/deleteGame', function (req, res) {
 })
 
 //get game info for editing
-app.get('/getGameInfo', function (req, res) {
+app.get('/api/getGameInfo', function (req, res) {
   console.log('about to getGameInfo')
   var gameID = req.query.gameID;
   console.log('api start, gameid: ', gameID)
@@ -474,7 +474,7 @@ app.get('/getGameInfo', function (req, res) {
 })
 
 //get standing game info for editing
-app.get('/getStandingGameInfo', function (req, res) {
+app.get('/api/getStandingGameInfo', function (req, res) {
   console.log('about to getStandingGameInfo')
   var gameID = req.query.gameID;
   console.log('api start, gameid: ', gameID)
@@ -485,7 +485,7 @@ app.get('/getStandingGameInfo', function (req, res) {
 })
 
 //SAVE SINGLE GAME
-app.get('/gamemessage', function (req, res) {
+app.get('/api/gamemessage', function (req, res) {
   console.log('api is getting: ', req.query)
   var gameStart = req.query.gameStart;
   var gameEnd = req.query.gameEnd;
@@ -521,7 +521,7 @@ app.get('/gamemessage', function (req, res) {
 })
 
 //GET LIST OF Players in a Group
-app.get('/getGroupPlayers', function (req, res) {
+app.get('/api/getGroupPlayers', function (req, res) {
   console.log('about to getGroupPlayers')
   var groupID = req.query.groupID;
     groups.getGroupPlayers(groupID).then(result => {
@@ -531,7 +531,7 @@ app.get('/getGroupPlayers', function (req, res) {
 })
 
 //GET Players status in a Group
-app.get('/getGroupStatus', function (req, res) {
+app.get('/api/getGroupStatus', function (req, res) {
   console.log('about to getGroupStatus')
   var groupID = req.query.groupID;
   var userID = req.query.userID;
@@ -542,7 +542,7 @@ app.get('/getGroupStatus', function (req, res) {
 })
 
 //GET Players status in a Group
-app.get('/changeGroupStatus', function (req, res) {
+app.get('/api/changeGroupStatus', function (req, res) {
   console.log('about to changeGroupStatus')
   var groupID = req.query.groupID;
   var userID = req.query.userID;
@@ -562,7 +562,7 @@ app.get('/changeGroupStatus', function (req, res) {
 })
 
 //GET Players groups
-app.get('/getPlayerGroups', function (req, res) {
+app.get('/api/getPlayerGroups', function (req, res) {
   console.log('about to getPlayerGroups')
   var userID = req.query.userID;
     groups.getPlayerGroups(userID).then(result => {
@@ -572,7 +572,7 @@ app.get('/getPlayerGroups', function (req, res) {
 })
 
 //GET Players
-app.get('/getPlayers', function (req, res) {
+app.get('/api/getPlayers', function (req, res) {
   console.log('about to getPlayers')
     players.getPlayers().then(result => {
       console.log('players result from azure is:', result);
@@ -581,7 +581,7 @@ app.get('/getPlayers', function (req, res) {
 })
 
 //GET Players groups by player
-app.get('/getPlayerGroupsbyPlayer', function (req, res) {
+app.get('/api/getPlayerGroupsbyPlayer', function (req, res) {
   console.log('about to getPlayerGroupsbyPlayer')
   var userID = req.query.userID;
     players.getPlayerGroupsbyPlayer(userID).then(result => {
