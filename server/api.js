@@ -29,7 +29,7 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true}));
 
 //app.use("/api", router);
-app.use("/", router);
+app.use("/api", router);
 
 router.use((request,response,next) => {
     console.log('middleware up');
@@ -101,7 +101,7 @@ app.get('/dupcheck', function (req, res) {
 })  
 })
 
-app.get('/auth', function (req, res) {
+app.get('/api/auth', function (req, res) {
     var userEmail = req.query.userEmail;
   var userPassword = req.query.userPassword;
     console.log('about to start login (mylogin) in dboperations', 'userEmail: ', userEmail, 'userPassword: ', userPassword);
