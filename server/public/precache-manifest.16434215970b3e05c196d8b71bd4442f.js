@@ -16,15 +16,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/apple-touch-icon.png"
   },
   {
-    "revision": "775ffd9b9e3f30dcfcfa",
-    "url": "/css/about.8b816af1.css"
+    "revision": "65b68e4be0ec39a2bd89",
+    "url": "/css/about.5b596d07.css"
   },
   {
-    "revision": "8d1540be1f3bebe6298c",
-    "url": "/css/app.e971fdd8.css"
+    "revision": "11f4a72b64c42760859e",
+    "url": "/css/app.a27c4e3f.css"
   },
   {
-    "revision": "fc67d5fe74d538eb9b76",
+    "revision": "ed92537844e3896ec1a0",
     "url": "/css/chunk-vendors.8e023364.css"
   },
   {
@@ -44,20 +44,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/pickleball.95afddd9.jpg"
   },
   {
-    "revision": "055b1b41f2ff117e8008c553cd289e26",
+    "revision": "1e51418bae8118343d3eb5b974038f91",
     "url": "/index.html"
   },
   {
-    "revision": "775ffd9b9e3f30dcfcfa",
-    "url": "/js/about.9765128b.js"
+    "revision": "65b68e4be0ec39a2bd89",
+    "url": "/js/about.37370647.js"
   },
   {
-    "revision": "8d1540be1f3bebe6298c",
-    "url": "/js/app.b986bb3c.js"
+    "revision": "11f4a72b64c42760859e",
+    "url": "/js/app.0c6eede9.js"
   },
   {
-    "revision": "fc67d5fe74d538eb9b76",
-    "url": "/js/chunk-vendors.29793f54.js"
+    "revision": "ed92537844e3896ec1a0",
+    "url": "/js/chunk-vendors.1f17d213.js"
   },
   {
     "revision": "a0ba5d4cb0928ef2db4d3711f6425890",
