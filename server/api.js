@@ -590,6 +590,38 @@ app.get('/api/getPlayerGroupsbyPlayer', function (req, res) {
 })  
 })
 
+//DELETE Player
+app.get('/api/deletePlayer', function (req, res) {
+  console.log('about to deletePlayer')
+  var playerID = req.query.playerID;
+    players.deletePlayer(playerID).then(result => {
+      console.log('deletePlayer result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+app.get('/api/getPlayer', function (req, res) {
+  console.log('about to getPlayer')
+  var playerID = req.query.playerID;
+    players.getPlayer(playerID).then(result => {
+      console.log('getPlayer result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+app.get('/api/editPlayer', function (req, res) {
+  console.log('about to editPlayer')
+  var playerID = req.query.playerID;
+  var firstName = req.query.firstName;
+  var lastName = req.query.lastName;
+  var displayName = req.query.displayName;
+  var email = req.query.email;
+  players.editPlayer(playerID, firstName, lastName, displayName, email).then(result => {
+    console.log('editPlayer result from azure is:', result);
+     res.send(result) 
+})  
+})
+
 //Handle production
 if(process.env.NODE_ENV === 'production') {
   //static folder
