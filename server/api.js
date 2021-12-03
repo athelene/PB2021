@@ -136,6 +136,66 @@ app.get('/api/auth', function (req, res) {
     })
 })
 
+//Set user's first available time
+app.get('/api/setmytime', function (req, res) {
+  var gameDate = req.query.gameDate;
+  var selectedTime = req.query.selectedTime;
+  var userID = req.query.userID;
+  var ampm = req.query.ampm;
+  console.log('gameDate, selectedTime, userID from url is: ',gameDate, selectedTime, userID, ampm);
+    games.setMyTime(gameDate, selectedTime, userID, ampm).then(result => {
+      console.log('user result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+//Set user's first available time
+app.get('/api/getmytime', function (req, res) {
+  var gameDate = req.query.gameDate;
+  var userID = req.query.userID;
+  var ampm = req.query.ampm;
+  console.log('gameDate, selectedTime, userID from url is: ', gameDate,  Number(userID), ampm);
+    games.getMyTime(gameDate, Number(userID), ampm).then(result => {
+      console.log('user result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+//Set user's first available time
+app.get('/api/getearliesttime', function (req, res) {
+  var gameDate = req.query.gameDate;
+  var ampm = req.query.ampm;
+  console.log('gameDate, ampm from url is: ', gameDate,  ampm);
+    games.getEarliestTime(gameDate, ampm).then(result => {
+      console.log('user result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+//Set user's first available time
+app.get('/api/getplayercount', function (req, res) {
+  var gameDate = req.query.gameDate;
+  var ampm = req.query.ampm;
+  console.log('gameDate, ampm from url is: ', gameDate,  ampm);
+    games.getPlayerCount(gameDate, ampm).then(result => {
+      console.log('user result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+//Set user's first available time
+app.get('/api/resigngame', function (req, res) {
+  var userID = req.query.userID;
+  var gameDate = req.query.gameDate;
+  var ampm = req.query.ampm;
+  console.log('gameDate, ampm from url is: ', gameDate,  ampm);
+    games.resignGame(userID, gameDate, ampm).then(result => {
+      console.log('user result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+
 //GET HOURS AVAILABLE FOR COURT ON GIVEN DATE
 app.get('/api/hourStatus', function (req, res) {
   var gameDate = req.query.gameDate;

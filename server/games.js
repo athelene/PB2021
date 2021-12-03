@@ -1,6 +1,94 @@
 var config = require('./dbconfig');
 const sql = require('mssql');
 
+
+
+async function setMyTime(gameDate, selectedTime, userID, ampm) {
+    try{
+        console.log('running setMyTime, selectedTime is: ', selectedTime);
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('gameDate', sql.Date, gameDate)
+        myproc.input('selectedTime', sql.NVarChar(8), selectedTime)
+        myproc.input('userID', sql.Int, userID)
+        myproc.input('ampm', sql.NVarChar(1), ampm)
+        let setTime = await myproc.execute("setmytime")
+        console.log('after proc runs, saveGame is: ', setTime)
+        return setTime;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function getMyTime(gameDate, userID, ampm) {
+    try{
+        console.log('running getMyTime ', gameDate, userID, ampm);
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('gameDate', sql.Date, gameDate)
+        myproc.input('userID', sql.Int, Number(userID))
+        myproc.input('ampm', sql.NVarChar(1), ampm)
+        let getTime = await myproc.execute("getmytime")
+        console.log('after proc runs, getTime is: ', getTime)
+        return getTime;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function getEarliestTime(gameDate, ampm) {
+    try{
+        console.log('running getMyTime ', gameDate, ampm);
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('gameDate', sql.Date, gameDate)
+        myproc.input('ampm', sql.NVarChar(1), ampm)
+        myproc.output('playerCount', sql.Int)
+        let getEarliestTime = await myproc.execute("getearliesttime")
+        console.log('after proc runs, getEarliestTime is: ', getEarliestTime)
+        return getEarliestTime;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function getPlayerCount(gameDate, ampm) {
+    try{
+        console.log('running getMyTime ', gameDate, ampm);
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('gameDate', sql.Date, gameDate)
+        myproc.input('ampm', sql.NVarChar(1), ampm)
+        myproc.output('playerCount', sql.Int)
+        let getPlayerCount = await myproc.execute("getPlayerCount")
+        console.log('after proc runs, getEarliestTime is: ', getPlayerCount)
+        return getPlayerCount;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function resignGame(userID, gameDate, ampm) {
+    try{
+        console.log('running getMyTime ', gameDate, ampm);
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('userID', sql.Int, userID);
+        myproc.input('gameDate', sql.Date, gameDate)
+        myproc.input('ampm', sql.NVarChar(1), ampm)
+        let resignGame = await myproc.execute("resignGame")
+        console.log('after proc runs, resignGame is: ', resignGame)
+        return resignGame;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 async function saveGame(gameStart, gameEnd, gameGroup, selectedCourt) {
     try{
         console.log('running saveGame,about to connect to sql');
@@ -200,6 +288,11 @@ async function deleteGameNote(gameNoteID) {
 }
 
 module.exports = {
+    setMyTime : setMyTime,
+    getMyTime : getMyTime,
+    getEarliestTime : getEarliestTime,
+    getPlayerCount : getPlayerCount,
+    resignGame : resignGame,
     saveGame: saveGame,
     getGameList : getGameList,
     getFullGameList : getFullGameList,
