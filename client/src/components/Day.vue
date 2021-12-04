@@ -118,7 +118,7 @@ export default {
       async setResign() {
           this.available = false;
           this.openTime = false;
-        await EventService.resignMyGame(this.user.UserID, this.gameDate, 'A')
+        await EventService.resignMyGame(this.user.userID, this.gameDate, 'A')
       .then(
         (() => {
             console.log('resigned')
@@ -133,7 +133,7 @@ export default {
           this.openTime = false;
           this.available = true;
           console.log('the time saved will be: ', this.selectedTime)
-        await EventService.setMyTime(this.user.UserID, this.selectedTime, this.gameDate, 'A')
+        await EventService.setMyTime(this.user.userID, this.selectedTime, this.gameDate, 'A')
       .then(
         (() => {
             console.log('selectedTime is : ', this.selectedTime)
@@ -145,7 +145,7 @@ export default {
       },
 
       async getMyTime(){
-        await EventService.getMyTime(this.user.UserID, this.gameDate, 'A')
+        await EventService.getMyTime(this.user.userID, this.gameDate, 'A')
       .then(
         ((myTime) => {
           this.selectedTime = myTime.StartTime2
@@ -182,7 +182,7 @@ export default {
        await EventService.getPlayerCount(this.gameDate, 'A')
       .then(
         ((playerCount) => {
-          console.log('playerCount P from ES is : ', playerCount.output.playerCount)
+          console.log('playerCount A from ES is : ', playerCount.output.playerCount)
           if(playerCount.output.playerCount > 0) {
           this.playerCount = playerCount.output.playerCount
           console.log('playerList will be: ', playerCount.recordset)
