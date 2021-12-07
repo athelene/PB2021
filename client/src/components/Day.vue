@@ -182,10 +182,10 @@ export default {
        await EventService.getPlayerCount(this.gameDate, 'A')
       .then(
         ((playerCount) => {
-          console.log('playerCount A from ES is : ', playerCount.output.playerCount)
+          console.log('playerCount A from ES is : ', playerCount, 'output count is: ', playerCount.output.playerCount)
           if(playerCount.output.playerCount > 0) {
           this.playerCount = playerCount.output.playerCount
-          console.log('playerList will be: ', playerCount.recordset)
+          console.log('playerList from playerCount.recordset will be: ', playerCount.recordset)
           this.playerList = playerCount.recordset
           } else {
             this.playerCount = 0
