@@ -32,13 +32,13 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use("/", router);
 
 router.use((request,response,next) => {
-    console.log('middleware up');
+
     next();
 })
 
-app.get('/', function (req, res) {
-  res.send('Hello Big Wide World!')
-})
+// app.get('/', function (req, res) {
+//   res.send('Hello Big Wide World!')
+// })
 
 //AUTHENTICATION ROUTES
 

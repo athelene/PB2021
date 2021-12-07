@@ -2,7 +2,7 @@
   "name": "pb2021",
   "version": "1.0.0",
   "description": "2021 pickleball app",
-  "main": "api.js",
+  "main": "/server/api.js",
   "scripts": {
     "start": "node server/api.js",
     "dev": "nodemon server/api.js"
