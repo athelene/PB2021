@@ -36,9 +36,9 @@ router.use((request,response,next) => {
     next();
 })
 
-// app.get('/', function (req, res) {
-//   res.send('Hello Big Wide World!')
-// })
+app.get('/', function (req, res) {
+  res.send('Hello Big Wide World!')
+})
 
 //AUTHENTICATION ROUTES
 
