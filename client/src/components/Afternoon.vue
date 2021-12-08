@@ -32,7 +32,7 @@
           dark
           @click="openTime=true"
         >
-         Change My Time
+         Change My Vote
         </v-btn>
 
     <v-card v-if="openTime">

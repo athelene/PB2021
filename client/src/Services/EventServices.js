@@ -124,6 +124,23 @@ export default {
         return res.data
         },
 
+        async weather() {
+          console.log('starting weather in es')
+           const params = {
+             key: '9a9a5cdaf4164cb99de181002210712',
+             q: '66061',
+             days: 7,
+             aqi: 'no', 
+             alerts: 'no'
+           }
+       
+          await axios.get('http://api.weatherapi.com/v1/forecast.json', {params})
+          .then((weather) => {
+            console.log('es weather is: ', weather);
+            return weather
+          })
+
+         }
   // async getGameList(gameDate, gameCourt) {
   //   let myroute = process.env.VUE_APP_SERVERNAME + '/getGameList'
   //   console.log('getGameList route: about to make the call to api. gameDate, gameCourt: ', gameDate, gameCourt)

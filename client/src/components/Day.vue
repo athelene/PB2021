@@ -34,7 +34,7 @@
           dark
           @click="openTime=true"
         >
-         Change My Time
+         Change My Vote
         </v-btn> 
 
     <v-card v-if="openTime">
@@ -102,6 +102,7 @@ export default {
        this.getMyTime();
        this.getEarliestTime()
        this.getPlayerCount();
+
 
   },
 
@@ -193,8 +194,7 @@ export default {
           }
         })
       );
-   }
-
+   },
 
 //     async getGamePlayers() {
 //       console.log(' starting getGamePlayers')
