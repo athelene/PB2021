@@ -1,6 +1,7 @@
 
 <template>
 <div class="">
+  <h3 v-if="earliestTime !== '' && earliestTime !== null && earliestTime !== undefined"> Everyone can play starting {{earliestTime}} </h3>
 
   <v-expansion-panels v-if="playerCount > 0">
     <v-expansion-panel    >
@@ -14,7 +15,6 @@
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
-  <h3 v-if="earliestTime !== '' && earliestTime !== null && earliestTime !== undefined"> The earliest your group can start is: {{earliestTime}} </h3>
         <v-btn v-if="!available"
           color="blue"
           dark
@@ -23,7 +23,7 @@
          Join 
         </v-btn> 
     <v-btn v-if="available"
-          color="blue"
+          color="green"
           dark
            @click="setResign()"
         >
@@ -34,7 +34,7 @@
           dark
           @click="openTime=true"
         >
-         Change My Vote
+         Change My Time
         </v-btn> 
 
     <v-card v-if="openTime">

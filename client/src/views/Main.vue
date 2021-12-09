@@ -2,42 +2,45 @@
   <div >
 
     <div v-for="day in days1" :key="day.ID" >
-      <v-card class="yellow lighten-4">
+      <v-card class="pink lighten-5">
         <v-card-title>
-    <v-row class="mt-5">{{day.DayOfWeek}}, {{day.gameDate}} AM</v-row>
+    <v-row class="mt-5">{{day.DayOfWeek}}, {{day.gameDate}} AM       
+      <v-btn icon @click="amWeatherOpen=!amWeatherOpen">        
+          <v-img
+            max-height="50"
+            max-width="50"
+            :src="day.amIcon"
+          ></v-img></v-btn></v-row>  
+        <br />
+          <div v-if="amWeatherOpen">
+           <h6> 9:00 am - Temp: {{day.amTemp}}, Wind: {{day.amWind}}, Chance of rain: {{day.amRain}}</h6>
+          </div>
         </v-card-title>
         <v-card-text>
 
       <Day  v-bind:gameDate="day.gameDate" v-on:update-games="setDay1" />
-        <v-expansion-panels v-if="day.amTemp">
-    <v-expansion-panel class="mt-3">
-      <v-expansion-panel-header>
-        Weather
-      </v-expansion-panel-header>
-      <v-expansion-panel-content>
-        9:00 am - Temp: {{day.amTemp}}, Wind: {{day.amWind}}, Chance of rain: {{day.amRain}}
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
+
+
         </v-card-text>
       </v-card>
-      <v-card class="blue lighten-4">
+      <v-card class="blue lighten-5">
         <v-card-title>
-    <v-row class="mt-5">{{day.DayOfWeek}}, {{day.gameDate}} PM</v-row>
+    <v-row class="mt-5">{{day.DayOfWeek}}, {{day.gameDate}} PM
+    <v-btn icon @click="pmWeatherOpen=!pmWeatherOpen">        
+          <v-img
+            max-height="50"
+            max-width="50"
+            :src="day.amIcon"
+          ></v-img></v-btn> </v-row> 
+        <br />
+          <div v-if="pmWeatherOpen">
+           <h6> 2:00 pm - Temp: {{day.pmTemp}}, Wind: {{day.pmWind}}, Chance of rain: {{day.pmRain}}</h6>
+          </div>
         </v-card-title>
         <v-card-text>
 
       <Afternoon v-bind:gameDate="day.gameDate" v-on:update-games="setDay1" />
-        <v-expansion-panels v-if="day.pmTemp">
-    <v-expansion-panel class="mt-3">
-      <v-expansion-panel-header>
-        Weather
-      </v-expansion-panel-header>
-      <v-expansion-panel-content>
-        2:00 pm - Temp: {{day.pmTemp}}, Wind: {{day.pmWind}}, Chance of rain: {{day.pmRain}}
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
+
         </v-card-text>
       </v-card>
       <v-divider></v-divider>
@@ -66,7 +69,9 @@ export default ({
       dayNo: 0,
       dayofweek: '',
       earliestTime: '',
-      weather: []
+      weather: [],
+      amWeatherOpen: false,
+      pmWeatherOpen: false
       
     }
   },
@@ -136,7 +141,9 @@ computed: {
     "amWind": this.weather.data.forecast.forecastday[i].hour[9].wind_mph, 
     "pmWind": this.weather.data.forecast.forecastday[i].hour[14].wind_mph,
     "amRain": this.weather.data.forecast.forecastday[i].hour[9].chance_of_rain,
-    "pmRain": this.weather.data.forecast.forecastday[i].hour[14].chance_of_rain}
+    "pmRain": this.weather.data.forecast.forecastday[i].hour[14].chance_of_rain,
+    "amIcon": this.weather.data.forecast.forecastday[i].hour[9].condition.icon, 
+    "pmIcon": this.weather.data.forecast.forecastday[i].hour[14].condition.icon, }
     this.days1.push(dayObj);} else 
     {
       var dayObj = {"ID": i, "gameDate": dayItem, "DayOfWeek": dayofweek}

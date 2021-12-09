@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.bc93ee9d8102401157e082a9620fd297.js"
+  "/precache-manifest.da37867324140044258fd0ef5b04cbfc.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "pbclient"});
