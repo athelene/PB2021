@@ -433,4 +433,4 @@ if(process.env.NODE_ENV === 'production') {
 
 var port = process.env.PORT || 8700;
 app.listen(port);
-console.log("Story API is running at " + port);
+console.log("ZeroZeroStart API is running at " + port);
