@@ -6,9 +6,9 @@ const games = require("./games");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 
-// const jwt = require('jsonwebtoken');
-// const checkAuth = require('./check-auth.js')
-// const checkAuthForm = require('./check-auth-form.js')
+ const jwt = require('jsonwebtoken');
+ const checkAuth = require('./check-auth.js')
+ const checkAuthForm = require('./check-auth-form.js')
 
 var express = require("express");
 //var cors = require('cors');
