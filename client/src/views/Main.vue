@@ -156,7 +156,7 @@ computed: {
           alerts: 'no'
         }
       console.log('weather params are: ', params)
-      await axios.get('http://api.weatherapi.com/v1/forecast.json', {params})
+      await axios.get('https://api.weatherapi.com/v1/forecast.json', {params})
       .then((weather) => {
         console.log('main weather is: ', weather);
         this.weather = weather
