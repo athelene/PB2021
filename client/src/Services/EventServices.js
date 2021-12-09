@@ -1,8 +1,17 @@
 import axios from "axios"
 
+import store from '../store'
 
+let servername = 'https://' + window.location.hostname;
+
+if (servername === 'https://localhost') {
+  servername = 'http://localhost:8700';
+}
 
 export default {
+
+
+
 
   //SET FOR PRODUCTION OR DEVELOPMENT
 //  getServerName() {
@@ -23,7 +32,7 @@ export default {
   },
 
   async login(userEmail, userPassword) {
-    let myroute = process.env.VUE_APP_SERVERNAME +  '/auth'
+    let myroute = servername +  '/auth'
     console.log('login (/auth route): about to make the call to api. email is: ', userEmail)
     const params = {
      userEmail: userEmail,
@@ -54,16 +63,16 @@ export default {
     return res.data;}
   },
 
-  async getHourStatus(gameDate, gameCourt) {
-    let myroute = process.env.VUE_APP_SERVERNAME + '/hourStatus'
-    console.log('hourStatus route: about to make the call to api. gameDate, gameCourt: ', gameDate, gameCourt)
-    const params = {
-     gameDate: gameDate,
-      gameCourt: gameCourt}
-   let res = await axios.get(myroute, { params })
-   console.log('ES hourStatus result is: ', res.data)
-      return res.data
-      },
+  // async getHourStatus(gameDate, gameCourt) {
+  //   let myroute = process.env.VUE_APP_SERVERNAME + '/hourStatus'
+  //   console.log('hourStatus route: about to make the call to api. gameDate, gameCourt: ', gameDate, gameCourt)
+  //   const params = {
+  //    gameDate: gameDate,
+  //     gameCourt: gameCourt}
+  //  let res = await axios.get(myroute, { params })
+  //  console.log('ES hourStatus result is: ', res.data)
+  //     return res.data
+  //     },
 
       async setMyTime(userID, selectedTime, gameDate, ampm) {
         let myroute = process.env.VUE_APP_SERVERNAME + '/setmytime'

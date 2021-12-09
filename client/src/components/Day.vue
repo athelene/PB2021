@@ -8,7 +8,7 @@
        <h3 >{{playerCount}} Player(s) Available</h3>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <div v-for="player in playerList" key="player.playerID">
+        <div v-for="player in playerList" :key="player.playerID">
           {{player.userDisplayName}}, {{player.userPhone}}, available starting: {{player.StartTime}}
         </div>
       </v-expansion-panel-content>
@@ -90,18 +90,21 @@ export default {
     playerList: ''
 
   }),
-      computed: {
+  
+  computed: {
   user(){
-    return this.$store.state.user
+    return this.$store.state.user.user
   }
         
   },
 
   mounted (){
       console.log('incoming gameDate is: ', this.gameDate)
+      console.log('user is: ', this.user.UserID)
        this.getMyTime();
        this.getEarliestTime()
        this.getPlayerCount();
+
 
 
   },
@@ -119,7 +122,7 @@ export default {
       async setResign() {
           this.available = false;
           this.openTime = false;
-        await EventService.resignMyGame(this.user.userID, this.gameDate, 'A')
+        await EventService.resignMyGame(this.user.UserID, this.gameDate, 'A')
       .then(
         (() => {
             console.log('resigned')
@@ -133,8 +136,8 @@ export default {
       async saveTime(){
           this.openTime = false;
           this.available = true;
-          console.log('the time saved will be: ', this.selectedTime)
-        await EventService.setMyTime(this.user.userID, this.selectedTime, this.gameDate, 'A')
+          console.log('the time saved, userID will be: ', this.selectedTime, this.user.UserID)
+        await EventService.setMyTime(this.user.UserID, this.selectedTime, this.gameDate, 'A')
       .then(
         (() => {
             console.log('selectedTime is : ', this.selectedTime)
@@ -146,7 +149,7 @@ export default {
       },
 
       async getMyTime(){
-        await EventService.getMyTime(this.user.userID, this.gameDate, 'A')
+        await EventService.getMyTime(this.user.UserID, this.gameDate, 'A')
       .then(
         ((myTime) => {
           this.selectedTime = myTime.StartTime2
@@ -182,19 +185,15 @@ export default {
         async getPlayerCount() {
        await EventService.getPlayerCount(this.gameDate, 'A')
       .then(
-        ((playerCount) => {
-          console.log('playerCount A from ES is : ', playerCount, 'output count is: ', playerCount.output.playerCount)
-          if(playerCount.output.playerCount > 0) {
-          this.playerCount = playerCount.output.playerCount
-          console.log('playerList from playerCount.recordset will be: ', playerCount.recordset)
-          this.playerList = playerCount.recordset
-          } else {
-            this.playerCount = 0
-              return
-          }
+        ((playerCountRes) => {
+          console.log('playerCountRes.recordset for', this.gameDate, 'A  is : ', playerCountRes.recordset)
+          this.playerCount = playerCountRes.output.playerCount
+            this.playerList = playerCountRes.recordset
+            console.log('PlayerList is: ', this.playerList, 'and playerCount is:', this.playerCount )
+
         })
       );
-   },
+      },
 
 //     async getGamePlayers() {
 //       console.log(' starting getGamePlayers')

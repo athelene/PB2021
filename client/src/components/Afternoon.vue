@@ -7,8 +7,8 @@
        <h3 >{{playerCount}} Player(s) Available</h3>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <div v-for="player in playerList" key="player.playerID">
-          {{player.userDisplayName}}, {{player.userPhone}}, available starting: {{player.StartTime}}
+        <div v-for="player in playerList" :key="player.playerID">
+          <a :href="'mailto:' + player.userEmail">{{player.userDisplayName}}</a>, {{player.userPhone}}, available starting: {{player.StartTime}}
         </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -50,7 +50,7 @@
     </v-card-text>
     <v-card-actions>
         <v-btn @click="saveTime()">Save</v-btn>
-                <v-btn v-if="myTime !== ''" @click="openTime = false">Cancel</v-btn>
+        <v-btn v-if="myTime !== ''" @click="openTime = false">Cancel</v-btn>
         <v-btn v-if="myTime === ''" @click="cancelChange()">Cancel</v-btn>
     </v-card-actions>
     </v-card>
@@ -94,12 +94,13 @@ export default {
     myTime2: '',
     earliestTime: '',
     playerCount: 0,
-    playerList: ''
+    playerList: '',
 
   }),
-      computed: {
+  
+  computed: {
   user(){
-    return this.$store.state.user
+    return this.$store.state.user.user
   }
         
   },
@@ -156,7 +157,7 @@ export default {
       .then(
         ((myTime) => {
           this.selectedTime = myTime.StartTime2
-          console.log('myTime.recordsets[0][0] for', this.gameDate, 'P  is : ', myTime.recordsets[0][0])
+          console.log('myTime.recordsets[0][0] for', this.gameDate, 'A  is : ', myTime.recordsets[0][0])
        if (myTime.recordsets[0].length !== 0 && myTime.recordsets[0] !== '' &&  myTime.recordsets[0] !== undefined) {
               console.log('myTime.recordsets[0] is: '), myTime.recordsets[0][0]
             this.available = true
@@ -188,19 +189,15 @@ export default {
         async getPlayerCount() {
        await EventService.getPlayerCount(this.gameDate, 'P')
       .then(
-        ((playerCount) => {
-          console.log('playerCount P from ES is : ', playerCount.output.playerCount)
-          if(playerCount.output.playerCount > 0) {
-          this.playerCount = playerCount.output.playerCount
-          console.log('playerList will be: ', playerCount.recordset)
-          this.playerList = playerCount.recordset
-          } else {
-              this.playerCount = 0;
-              return
-          }
+        ((playerCountRes) => {
+          console.log('playerCountRes.recordset for', this.gameDate, 'P  is : ', playerCountRes.recordset)
+          this.playerCount = playerCountRes.output.playerCount
+            this.playerList = playerCountRes.recordset
+            console.log('PlayerList is: ', this.playerList, 'and playerCount is:', this.playerCount )
+
         })
       );
-   }
+      },
       
 
 //     async getGamePlayers() {

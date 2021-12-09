@@ -31,12 +31,16 @@ if(process.env.NODE_ENV === 'production') {
   })
 }
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://zerozerostart.herokuapp.com")
 
-  // if(process.env.NODE_ENV === 'production') {
-  // res.header("Access-Control-Allow-Origin", "https://zerozerostart.herokuapp.com");
-  // }
+
+app.use((req, res, next) => {
+//    res.header("Access-Control-Allow-Origin", "https://zerozerostart.herokuapp.com")
+if(process.env.NODE_ENV !== 'production') {
+  res.header("Access-Control-Allow-Origin", "*");
+  }
+   if(process.env.NODE_ENV === 'production') {
+   res.header("Access-Control-Allow-Origin", "https://zerozerostart.herokuapp.com")
+   }
   // if(process.env.SERVER_STATUS === 'DevHeroku') {
   // res.header("Access-Control-Allow-Origin", "https://zerozerostart.herokuapp.com");
   // }
