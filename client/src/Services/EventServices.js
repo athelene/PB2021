@@ -2,10 +2,10 @@ import axios from "axios"
 
 import store from '../store'
 
-let servername = 'https://' + window.location.hostname;
+  let servername = 'https://' + window.location.hostname;
 
-if (servername === 'https://localhost') {
-  servername = 'http://localhost:8700';
+    if (servername === 'https://localhost') {
+      servername = 'http://localhost:8700';
 }
 
 export default {
@@ -149,7 +149,15 @@ export default {
             return weather
           })
 
-         }
+         },
+
+         async getPlayers() {
+          let myroute = process.env.VUE_APP_SERVERNAME + '/getPlayers'
+          console.log('getPlayers route: about to make the call to api. ')
+          let res = await axios.get(myroute)
+          console.log('ES getPlayers result is: ', res.data)
+            return res.data
+            },
   // async getGameList(gameDate, gameCourt) {
   //   let myroute = process.env.VUE_APP_SERVERNAME + '/getGameList'
   //   console.log('getGameList route: about to make the call to api. gameDate, gameCourt: ', gameDate, gameCourt)
@@ -543,13 +551,7 @@ export default {
   //   return res.data;
   // },
 
-  // async getPlayers() {
-  //   let myroute = process.env.VUE_APP_SERVERNAME + '/getPlayers'
-  //   console.log('getPlayers route: about to make the call to api. ')
-  //   let res = await axios.get(myroute)
-  //   console.log('ES getPlayers result is: ', res.data)
-  //     return res.data
-  //     },
+
 
   // async getPlayerGroupsbyPlayer(userID) {
   //   let myroute = process.env.VUE_APP_SERVERNAME + '/getPlayerGroupsbyPlayer'

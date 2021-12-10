@@ -16,9 +16,7 @@
 
       <v-navigation-drawer app v-model="drawer" class="blue white--text">
           <v-btn @click="drawer = !drawer" class="orange darken-3"><v-icon class="white--text">mdi-backburger</v-icon></v-btn>
-          <p @click="goToRoute('Home')">Scheduled Games</p>
-          <p v-if="user.userAdmin === 1" @click="goToRoute('StandingGames')">Manage Weekly Games</p>
-          <p @click="goToRoute('groups')">Groups</p>
+          <p @click="goToRoute('main')">Home</p>
           <p @click="goToRoute('players')">Players</p>
           <p @click="logout()">Logout</p>
       </v-navigation-drawer>

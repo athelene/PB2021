@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const authenticationOps = require("./authenticationOps");
 const games = require("./games");
+const players = require("./players");
 
 const bcrypt = require("bcrypt");
 const fs = require("fs");
@@ -134,6 +135,16 @@ app.get('/api/setmytime', function (req, res) {
   })  
   })
 
+//GET Players
+app.get('/api/getPlayers', function (req, res) {
+  console.log('about to getPlayers')
+    players.getPlayers().then(result => {
+      console.log('players result from azure is:', result);
+     res.send(result) 
+})  
+})
+
+
 //AUTHENTICATION ROUTES
 
 //registers a new user
@@ -246,44 +257,6 @@ app.get("/dupcheck", function (req, res) {
   });
 });
 
-//Authenticates a user on attempted login
-// app.get("/auth", function (req, res) {
-//   var userEmail = req.query.userEmail;
-//   var userPassword = req.query.userPassword;
-
-//   authenticationOps.login(userEmail).then((result) => {
-
-//     if (result === false) {
-//       res.send("false");
-//     } else {
-//       bcrypt.compare(
-//         userPassword,
-//         result.UserHash,
-//         function (err, resultCompare) {
-//           //       PASSWORD IS INVALID
-//           if (resultCompare === false || err ) {
-//             res.send("false");
-//           } else {
-//             //SET UP JWT TOKEN
-//               const token = jwt.sign(result, 
-//                 process.env.JWT_KEY,
-//                 {
-//                   expiresIn: "5m"
-//                 })
-//               const reauthToken = jwt.sign(result, 
-//                 process.env.JWT_REFRESH_KEY,
-//                 {
-//                   expiresIn: "72h"
-//                 })
-//             authenticationOps.getUser(userEmail, token).then((result) => {
-//               res.status(200).json({user: result, token: token, reauthToken: reauthToken});
-//             });
-//           }
-//         }
-//       );
-//     }
-//   });
-// });
 //Authenticates a user on attempted login
 app.get("/auth", function (req, res) {
   var userEmail = req.query.userEmail;
@@ -416,7 +389,7 @@ app.get("/resetPassword", function (req, res) {
           });
             //END OF HASHING
 
-//Get system message
+
 
 
 

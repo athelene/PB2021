@@ -81,7 +81,6 @@
            {{player.userEmail}} <br />
             ( {{player.userPhoneAreaCode}} ) {{player.userPhonePrefix}}-{{player.userPhoneLine}}
             </v-card-text>
-        <PlayerGroups :player="player" />
         <v-row v-if="user.userAdmin === 1 || user.UserID === player.userID" class="mt-4 mr-4 ml-4">
     <v-btn icon small @click="editPlayer(player.userID)"><v-icon>mdi-pencil</v-icon></v-btn>
     <v-spacer></v-spacer>
