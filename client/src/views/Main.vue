@@ -13,7 +13,7 @@
           ></v-img></v-btn></v-row>  
         <br />
           <div v-if="amWeatherOpen">
-           <h6> 9:00 am - Temp: {{day.amTemp}}, Wind: {{day.amWind}}, Chance of rain: {{day.amRain}}</h6>
+           <h6> 9:00 am - Temp: {{day.amTemp}}, Wind: {{day.amWind}}, Rain: {{day.amRain}}%, Snow: {{day.amSnow}}%</h6>
           </div>
         </v-card-title>
         <v-card-text>
@@ -142,6 +142,8 @@ computed: {
     "pmWind": this.weather.data.forecast.forecastday[i].hour[14].wind_mph,
     "amRain": this.weather.data.forecast.forecastday[i].hour[9].chance_of_rain,
     "pmRain": this.weather.data.forecast.forecastday[i].hour[14].chance_of_rain,
+    "amSnow": this.weather.data.forecast.forecastday[i].hour[9].chance_of_snow,
+    "pmSnow": this.weather.data.forecast.forecastday[i].hour[14].chance_of_snow,
     "amIcon": this.weather.data.forecast.forecastday[i].hour[9].condition.icon, 
     "pmIcon": this.weather.data.forecast.forecastday[i].hour[14].condition.icon, }
     this.days1.push(dayObj);} else 

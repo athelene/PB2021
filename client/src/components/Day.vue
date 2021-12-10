@@ -10,7 +10,8 @@
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <div v-for="player in playerList" :key="player.playerID">
-           <a :href="'mailto:' + player.userEmail">{{player.userDisplayName}}</a>, {{player.userPhone}}, available starting: {{player.StartTime}}
+           <a :href="'mailto:' + player.userEmail">{{player.userDisplayName}}</a>, 
+           <a :href="'tel:' + player.userPhone">{{player.userPhone}}</a>, available starting: {{player.StartTime}}
         </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
