@@ -1,12 +1,11 @@
 const config = {
-    user: 'athelenepb',
-    password: 'Off 2 find ColdFusion!',
-    server: 'sql1-p2stl.ezhostingserver.com',
-    database: 'PB2021',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    server: process.env.DB_HOST,
+    database: process.env.DB_DB,
     options: {
         Encrypt: true,
-        trustServerCertificate: true
-//        enableArithPort: true
+        enableArithPort: true
     },
     port: 1433
 }

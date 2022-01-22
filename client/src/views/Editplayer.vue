@@ -19,6 +19,7 @@
                 v-model="firstName"
                   label="First Name"
                   required
+                  tabindex="1"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -30,6 +31,7 @@
                 v-model="lastName"
                   label="Last Name"
                   required
+                  tabindex="2"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -41,6 +43,7 @@
                 v-model="displayName"
                   label="How you want your name displayed"
                   required
+                  tabindex="3"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -52,9 +55,22 @@
                 v-model="email"
                   label="Email"
                   required
+                  tabindex="5"
                 ></v-text-field>
               </v-col>
+        <v-col
+          cols="6"
+          md="6"
+        >
+        Phone <br />
 
+          <v-text-field
+            v-model="userPhone"
+            hint="Numbers Only!"
+            required
+            tabindex="6"
+          ></v-text-field>
+          </v-col>
 
 
             </v-row>
@@ -73,6 +89,7 @@
             color="blue darken-1"
             text
             @click="editPlayer()"
+            tabindex="7"
           >
             Save
           </v-btn>
@@ -97,6 +114,7 @@ export default {
       displayName: '',
       email: [],
       phone: [],
+      userPhone: '',
 
     }
   },
@@ -116,18 +134,21 @@ methods: {
     async getPlayer() {
       await EventService.getPlayer(this.playerID)
       .then(
-        (playerReturn => {
+        (playerReturn) => {
           this.firstName = playerReturn[0].userFirst;
           this.lastName = playerReturn[0].userLast;
           this.displayName = playerReturn[0].userDisplayName;
           this.email = playerReturn[0].userEmail;
-            console.log('after playerReturn: ', this.firstName, this.lastName, this.displayName, this.email)
+          this.userPhone = playerReturn[0].userPhone;
+ //           console.log('after playerReturn: ', this.firstName, this.lastName, this.displayName, this.email)
         })
-      )
     },
 
     async editPlayer() {
-      await EventService.editPlayer(this.playerID, this.firstName, this.lastName, this.displayName, this.email)
+      var areaCode = this.userPhone.substr(0, 3)
+      var prefixCode = this.userPhone.substr(3,3)
+      var phoneLine = this.userPhone.substr(6,4)
+      await EventService.editPlayer(this.playerID, this.firstName, this.lastName, this.displayName, this.email, areaCode, prefixCode, phoneLine)
       .then(
         (() => {
         this.$router.push({ path: 'Players' })

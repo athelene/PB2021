@@ -48,134 +48,7 @@ async function sendNewMemberConfirmation(userEmail, verificationCode, userID) {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 }
 
-async function sendInvitationCharter2(email, invitedBy, invitationID) {
-  var setLink =
-    '<a href="http://localhost:8080/acceptinvitation/' +
-    invitationID +
-    '">' +
-    "<button>Click To Get Started</button></a>";
-  console.log("starting sendInvitation email, setLink is: ", setLink);
-  console.log("starting sendInvitation email");
 
-  const mailBody =
-    "<h1>" +
-    "You have been invited to join StoriesForUs as a charter member!</h1>" +
-    "<p></p>StoriesForUs is a great place to keep generations connected by saving and sharing your stories. " +
-    "As an early charter member, you will have a FREE life time membership when you sign up. Plus, the first 10 people you invite will have a FREE lifetime membership too!</p>" +
-    "<h3>Click on the button below to start your free 30 day trial.</h3>" +
-    setLink;
-
-  console.log("mailBody reads: ", mailBody);
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    name: "mail.storiesforus.com",
-    host: "mail.storiesforus.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: process.env.EMAIL_USER, // generated ethereal user
-      pass: process.env.EMAIL_PW, // generated ethereal password
-    },
-  });
-
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"StoriesForUs" <info@storiesforus.com>', // sender address
-    to: email, // list of receivers
-    subject: invitedBy + " is asking you to join them on StoriesForUs", // Subject line
-    html: mailBody, // html body
-  });
-  console.log("mail sent", info);
-  console.log("Message sent: %s", info.messageId);
-  return info.accepted;
-}
-
-async function sendInvitationCharter3(email, invitedBy, invitationID) {
-  var setLink =
-    '<a href="http://localhost:8080/acceptinvitation/' +
-    invitationID +
-    '">' +
-    "<button>Click To Get Started</button></a>";
-  console.log("starting sendInvitation email, setLink is: ", setLink);
-  console.log("starting sendInvitation email");
-
-  const mailBody =
-    "<h1>" +
-    "You have been invited to join StoriesForUs as a charter member!</h1>" +
-    "<p></p>StoriesForUs is a great place to keep generations connected by saving and sharing your stories. " +
-    "As a charter member, you will have a FREE life time membership when you sign up. Plus, the first 5 people you invite will have a FREE lifetime membership too!</p>" +
-    "<h3>Click on the button below to start your free 30 day trial.</h3>" +
-    setLink;
-
-  console.log("mailBody reads: ", mailBody);
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    name: "mail.storiesforus.com",
-    host: "mail.storiesforus.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: process.env.EMAIL_USER, // generated ethereal user
-      pass: process.env.EMAIL_PW, // generated ethereal password
-    },
-  });
-
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"StoriesForUs" <info@storiesforus.com>', // sender address
-    to: email, // list of receivers
-    subject: invitedBy + " is asking you to join them on StoriesForUs", // Subject line
-    html: mailBody, // html body
-  });
-  console.log("mail sent", info);
-  console.log("Message sent: %s", info.messageId);
-  return info.accepted;
-}
-
-async function sendInvitationCharter4(email, invitedBy, invitationID) {
-  var setLink =
-    '<a href="http://localhost:8080/acceptinvitation/' +
-    invitationID +
-    '">' +
-    "<button>Click To Get Started</button></a>";
-  console.log("starting sendInvitation email, setLink is: ", setLink);
-  console.log("starting sendInvitation email");
-
-  const mailBody =
-    "<h1>" +
-    "You have been invited to join StoriesForUs as a charter member!</h1>" +
-    "<p></p>StoriesForUs is a great place to keep generations connected by saving and sharing your stories. " +
-    "As a charter member, you have a FREE life time membership when you sign up.</p>" +
-    "<h3>Click on the button below to start your free 30 day trial.</h3>" +
-    setLink;
-
-  console.log("mailBody reads: ", mailBody);
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    name: "mail.storiesforus.com",
-    host: "mail.storiesforus.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: process.env.EMAIL_USER, // generated ethereal user
-      pass: process.env.EMAIL_PW, // generated ethereal password
-    },
-  });
-
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"StoriesForUs" <info@storiesforus.com>', // sender address
-    to: email, // list of receivers
-    subject: invitedBy + " is asking you to join them on StoriesForUs", // Subject line
-    html: mailBody, // html body
-  });
-  console.log("mail sent", info);
-  console.log("Message sent: %s", info.messageId);
-  return info.accepted;
-}
 async function sendInvitationMonthly(email, invitedBy, invitationID) {
   var setLink =
     '<a href="http://localhost:8080/acceptinvitation/' +
@@ -305,9 +178,6 @@ async function forgot(email, userUUID) {
 module.exports = {
   sendNewMemberConfirmation: sendNewMemberConfirmation,
   sendEmailChange: sendEmailChange,
-  sendInvitationCharter2: sendInvitationCharter2,
-  sendInvitationCharter3: sendInvitationCharter3,
-  sendInvitationCharter4: sendInvitationCharter4,
   sendInvitationMonthly: sendInvitationMonthly,
   forgot : forgot
 };

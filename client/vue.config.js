@@ -15,8 +15,14 @@ module.exports = {
     }
   },
 
+  chainWebpack: config => {
+    config.plugins.delete('pwa');
+    config.plugins.delete('workbox');
+    config.plugin('html').tap(args => { args[0].title = 'Dinking Divas'; return args; });
+  },
+
   pwa: {
-    name: 'Pickleball Schedule',
+    name: 'Dinking Divas',
     iconPaths: {
       favicon32: 'img/icons/favicon-32x32.png',
       favicon16: 'img/icons/favicon-16x16.png',

@@ -2,26 +2,28 @@
   <div class="text-center" >
     <h1 class="ml-5 headingColor">Players</h1>
 <v-dialog
-      v-model="dialog"
+      v-model="dialogInvitation"
       persistent
       max-width="600px"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn small color="primary" class="ml-4 mb-3"
+        <v-btn
+          color="primary"
           dark
           v-bind="attrs"
           v-on="on"
-          v-if="user.userAdmin === 1"
+          v-if="user.user.userAdmin === 1"
         >
-          New Player
+          Send Invitation
         </v-btn>
       </template>
       <v-card>
-        <v-card-title>
-          <span class="text-h5">New Player</span>
-        </v-card-title>
+        <v-card-subtitle>
+          <span class="text-h5">Send Invitation</span>
+        </v-card-subtitle>
         <v-card-text>
           <v-container>
+            <p v-if="invitationStatus">{{invitationStatus}}</p>
             <v-row>
               <v-col
                 cols="12"
@@ -29,19 +31,8 @@
                 md="4"
               >
                 <v-text-field
-                v-model="playerName"
-                  label="Player Name"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                v-model="playerEmail"
-                  label="Player Email"
+                  v-model="invitePlayerEmail"
+                  label="Email Address"
                   required
                 ></v-text-field>
               </v-col>
@@ -53,16 +44,16 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="closeInvitationDialog()"
           >
             Close
           </v-btn>
           <v-btn
             color="blue darken-1"
             text
-            @click="newPlayer()"
+            @click="invitePlayer()"
           >
-            Save
+            Send
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -78,10 +69,11 @@
  
             </v-card-title>
             <v-card-text>
-           {{player.userEmail}} <br />
-            ( {{player.userPhoneAreaCode}} ) {{player.userPhonePrefix}}-{{player.userPhoneLine}}
+           <a :href="'mailto:' + player.userEmail"> {{player.userEmail}} </a> <br />
+           <a :href="'tel:' + player.userPhone">{{player.userPhone}}</a>
+           
             </v-card-text>
-        <v-row v-if="user.userAdmin === 1 || user.UserID === player.userID" class="mt-4 mr-4 ml-4">
+        <v-row v-if="user.user.userAdmin === 1 || user.user.UserID === player.userID" class="mt-4 mr-4 ml-4">
     <v-btn icon small @click="editPlayer(player.userID)"><v-icon>mdi-pencil</v-icon></v-btn>
     <v-spacer></v-spacer>
     <v-btn icon small @click="deletePlayer(player.userID)" v-if="user.userAdmin === 1"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
@@ -92,13 +84,9 @@
 
 <script>
 import EventService from '../Services/EventServices'
-import PlayerGroups from '../components/PlayerGroups.vue'
 
 export default {
     name: "Players",
-      components: {
-        PlayerGroups
-  },
 
     data: function() {
     return {
@@ -109,7 +97,10 @@ export default {
       groupTypes: [],
       groupTypeID: ' ',
       playerName: '',
-      playerEmail: ''      
+      playerEmail: '' ,
+      dialogInvitation: false, 
+      invitePlayerEmail: '',   
+      invitationStatus: '', 
     }
   },
 computed: {
@@ -120,22 +111,23 @@ computed: {
   },
 created() {
 
-    console.log('created Players.vue: ')
+//    console.log('created Players.vue: ')
 
 },
 mounted() {
     this.getPlayers();
-    console.log('should have run getPlayers')
+//    console.log('should have run getPlayers')
+//    console.log('user is: ', this.user)
 },
 methods: {
 
     async getPlayers() {
-        console.log('starting getPlayers in vue file')
+//        console.log('starting getPlayers in vue file')
       await EventService.getPlayers()
       .then(
         (playersReturn => {
           this.players= playersReturn
-            console.log('this.players is: ', this.players)
+//            console.log('this.players is: ', this.players)
         })
       );
     },
@@ -149,18 +141,22 @@ methods: {
       );
     },
 
-    async newPlayer() {
-      await EventService.newPlayer(this.playerName, this.playerEmail)
-      .then(
-        (() => {
-          this.playerName ='';
-          this.playerID = '';
-          this.playerEmail = '';
-          this.playerPhone = '';
-          this.dialog = false;
-          this.getPlayers();
-        })
-      );
+    async invitePlayer() {
+
+//      console.log('in Players.vue invitePlayerEmail is: ', this.invitePlayerEmail)
+      await EventService.invitePlayer(this.invitePlayerEmail, this.user.user.UserID)
+      .then((dupCheck) => {
+        if(dupCheck === 'duplicate') {
+          this.invitationStatus = "Duplicate email."
+        } else 
+        { this.invitationStatus = "Invitation sent"}
+      })
+    },
+
+    closeInvitationDialog() {
+      this.invitationStatus = '';
+      this.invitePlayerEmail = '';
+      this.dialogInvitation = false;
     },
 
   async editPlayer(playerID) {

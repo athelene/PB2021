@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -9,127 +8,69 @@ const routes = [
     path: "/",
     name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+      import("../views/Login.vue"),
   },
-  // {
-  //   path: "/Home",
-  //   name: "Home",
-  //   component: Home,
-  // },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+
   {
     path: "/main",
     name: "Main",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Main.vue"),
+      import("../views/Main.vue"),
   },
   {
-    path: "/login",
-    name: "Login",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/registration",
+    name: "Registration",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
-  },
-  {
-    path: "/newgame",
-    name: "Newgame",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Newgame.vue"),
-  },
-
-  {
-    path: "/editgame",
-    name: "Editgame",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Editgame.vue"),
-  },
-
-  {
-    path: "/StandingGames",
-    name: "StandingGames",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/StandingGames.vue"),
-  },
-
-  {
-    path: "/newstandinggame",
-    name: "Newstandinggame",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Newstandinggame.vue"),
-  },
-
-  {
-    path: "/editstandinggame",
-    name: "Editstandinggame",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Editstandinggame.vue"),
-  },
-
-  {
-    path: "/groups",
-    name: "Groups",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Groups.vue"),
-  },
-  {
-    path: "/editgroup",
-    name: "Editgroup",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Editgroup.vue"),
+      import("../views/Registration.vue"),
   },
 
   {
     path: "/players",
     name: "Players",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Players.vue"),
+      import( "../views/Players.vue"),
+  },
+
+  {
+    path: "/invitations",
+    name: "Invitations",
+    component: () =>
+      import("../views/Invitations.vue"),
   },
 
   {
     path: "/editplayer",
     name: "Editplayer",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Editplayer.vue"),
+      import("../views/Editplayer.vue"),
+  },
+
+  {
+    path: "/message",
+    name: "Message",
+    component: () =>
+      import("../views/Message.vue"),
+  },
+
+  {
+    path: "/faq",
+    name: "Faq",
+    component: () =>
+      import( "../views/FAQ.vue"),
+  },
+
+  {
+    path: "/editfaq",
+    name: "Editfaq",
+    component: () =>
+      import("../views/Editfaq.vue"),
+  },
+
+  {
+    path: "/EventList",
+    name: "EventList",
+    component: () =>
+      import( "../views/EventList.vue"),
   },
 
 ];
