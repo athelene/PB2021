@@ -66,7 +66,7 @@ router.use((request, response, next) => {
 
 //PB APIs
 
-//Get Notes
+//Get Messages
 app.get('/getMessages', function (req, res) {
 //  console.log('about to getMessages')
     players.getMessages()
