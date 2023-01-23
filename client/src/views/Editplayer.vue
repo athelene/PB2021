@@ -1,5 +1,5 @@
 <template class="appBackground">
-  <div >
+  <div v-if="user.userID > 0" >
 
         <v-card class="Selected">
     <v-form class="Selected mt-3" >
@@ -126,6 +126,9 @@ computed: {
   },
 
 mounted() {
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.playerID = this.$route.query.ID;
     this.getPlayer();
 },
@@ -140,7 +143,6 @@ methods: {
           this.displayName = playerReturn[0].userDisplayName;
           this.email = playerReturn[0].userEmail;
           this.userPhone = playerReturn[0].userPhone;
- //           console.log('after playerReturn: ', this.firstName, this.lastName, this.displayName, this.email)
         })
     },
 

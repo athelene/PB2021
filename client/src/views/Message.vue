@@ -74,38 +74,32 @@ computed: {
   },
       
   },
-created() {
 
-//    console.log('created Message.vue: ')
-
-},
 mounted() {
-//    console.log('user is: ', this.user)
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.getMessages();
 },
 
 methods: {
 
     async getMessages() {
-//        console.log('starting sendMessage in vue file')
       await EventService.getMessages()
       .then(
         (messagesReturn => {
-//            console.log('received messages', messagesReturn)
             this.messages = messagesReturn;
         })
       );
     },
     async sendMessage() {
-//        console.log('starting sendMessage in vue file')
       await EventService.sendMessage(this.user.user.UserID, this.newMsgText)
       .then(    
         (() => {
             this.getMessages();
-//            console.log('message sent ')
             this.msgStatus="Message Sent"
             this.newMsgText = '';
-            this.$router.push({ path: 'home' })
+            this.$router.push({ path: 'Main' })
         })
       );
     },

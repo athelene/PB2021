@@ -109,25 +109,21 @@ computed: {
   },
       
   },
-created() {
 
-//    console.log('created Players.vue: ')
-
-},
 mounted() {
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.getPlayers();
-//    console.log('should have run getPlayers')
-//    console.log('user is: ', this.user)
+
 },
 methods: {
 
     async getPlayers() {
-//        console.log('starting getPlayers in vue file')
       await EventService.getPlayers()
       .then(
         (playersReturn => {
           this.players= playersReturn
-//            console.log('this.players is: ', this.players)
         })
       );
     },
@@ -143,7 +139,6 @@ methods: {
 
     async invitePlayer() {
 
-//      console.log('in Players.vue invitePlayerEmail is: ', this.invitePlayerEmail)
       await EventService.invitePlayer(this.invitePlayerEmail, this.user.user.UserID)
       .then((dupCheck) => {
         if(dupCheck === 'duplicate') {

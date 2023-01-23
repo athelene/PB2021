@@ -2,11 +2,9 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
-//const notificationOps = require("./notificationOps");
-//const authenticationOps = require('./authenticationOps')
+
 
 async function sendNewMemberConfirmation(userEmail, verificationCode, userID) {
-  console.log("starting sendNewMemberConfirmation");
 
   const mailBody =
     "<h1>Welcome to the Cedar Creek Picklball Club App!</h1>" +
@@ -18,8 +16,6 @@ async function sendNewMemberConfirmation(userEmail, verificationCode, userID) {
     userID +
     '">' +
     "<button>Click To Verify</button></a>";
-
-  console.log("mailBody reads: ", mailBody);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -41,11 +37,6 @@ async function sendNewMemberConfirmation(userEmail, verificationCode, userID) {
     html: mailBody, // html body
   });
   await notificationOps.notificationMemberConfirmation(userID, userEmail);
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 }
 
 
@@ -55,7 +46,6 @@ async function sendInvitationMonthly(email, invitedBy, invitationID) {
     invitationID +
     '">' +
     "<button>Click To Get Started</button></a>";
-  console.log("starting sendInvitation email, setLink is: ", setLink);
 
   const mailBody =
     "<h1>" +
@@ -63,8 +53,6 @@ async function sendInvitationMonthly(email, invitedBy, invitationID) {
     " has invited you to join them on StoriesForUs!</h1>" +
     "<h3>Click on the button below to start your free 30 day trial.</h3>" +
     setLink;
-
-  console.log("mailBody reads: ", mailBody);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -85,8 +73,6 @@ async function sendInvitationMonthly(email, invitedBy, invitationID) {
     subject: invitedBy + " is asking you to join them on StoriesForUs", // Subject line
     html: mailBody, // html body
   });
-  console.log("mail sent", info);
-  console.log("Message sent: %s", info.messageId);
   return info.accepted;
 }
 
@@ -98,7 +84,6 @@ async function sendEmailChange(email, userID, recno) {
       "&recno=" +
       recno
   );
-  console.log("starting sendEmailChange email, link is: ", encodedLink);
 
   const mailBody =
     "<h1>" +
@@ -110,8 +95,6 @@ async function sendEmailChange(email, userID, recno) {
     encodedLink +
     '">' +
     "<button>Click To Confirm</button></a>";
-
-  console.log("mailBody reads: ", mailBody);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -132,13 +115,10 @@ async function sendEmailChange(email, userID, recno) {
     subject: "Email address change request", // Subject line
     html: mailBody, // html body
   });
-  console.log("mail sent", info);
-  console.log("Message sent: %s", info.messageId);
   return info.accepted;
 }
 
 async function forgot(email, userUUID) {
-  console.log("starting emailOps.forgot");
 
   const mailBody =
     "<h1>Forgot Your Password Verification</h1>" +
@@ -149,7 +129,6 @@ async function forgot(email, userUUID) {
     '">' +
     "<button>Click To Change Password</button></a>";
 
-  console.log("mailBody reads: ", mailBody);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -170,7 +149,6 @@ async function forgot(email, userUUID) {
     subject: "Forgot Your Password Verification", // Subject line
     html: mailBody, // html body
   });
-  console.log("Message sent: %s", info.messageId);
 
 }
 

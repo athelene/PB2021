@@ -111,23 +111,22 @@ computed: {
   },
 created() {
 
-//    console.log('created Players.vue: ')
 
 },
 mounted() {
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.getFaqs();
-//    console.log('should have run getPlayers')
-//    console.log('user is: ', this.user)
+
 },
 methods: {
 
     async getFaqs() {
-//        console.log('starting getPlayers in vue file')
       await EventService.getFaqs()
       .then(
         (faqReturn => {
           this.faqs= faqReturn
-//            console.log('this.faqs is: ', this.faqs)
         })
       );
     },
@@ -143,7 +142,6 @@ methods: {
 
     async addFaq() {
 
-//      console.log('in Players.vue invitePlayerEmail is: ', this.invitePlayerEmail)
       await EventService.addFaq(this.newFaqQuestion, this.newFaqAnswer)
       .then((faqReturn) => {
         this.faqs = faqReturn

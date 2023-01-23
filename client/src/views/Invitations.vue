@@ -12,7 +12,6 @@
           dark
           v-bind="attrs"
           v-on="on"
-          v-if="user.user.userAdmin === 1"
         >
           Send Invitation
         </v-btn>
@@ -106,18 +105,18 @@ created() {
 
 },
 mounted() {
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.getInvitations();
 },
 methods: {
 
     async getInvitations() {
-//        console.log('starting getInvitations in vue file')
       await EventService.getInvitations()
       .then(
         (playersReturn => {
           this.players= playersReturn
-//          console.log('current user is: ', this.user)
-//            console.log('this.players is: ', this.players)
         })
       );
     },
@@ -133,7 +132,6 @@ methods: {
 
     async invitePlayer() {
 
-//      console.log('in Players.vue invitePlayerEmail is: ', this.invitePlayerEmail)
       await EventService.invitePlayer(this.invitePlayerEmail, this.user.user.UserID)
       .then((dupCheck) => {
         if(dupCheck === 'duplicate') {

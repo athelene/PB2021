@@ -1,5 +1,5 @@
 <template class="appBackground">
-  <div >
+  <div v-if="user.userID > 0" >
 
       <v-card>
         <v-card-subtitle>
@@ -75,6 +75,9 @@ computed: {
   },
 
 mounted() {
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.faqID = this.$route.query.ID;
     this.getFaq();
 },
@@ -86,7 +89,6 @@ methods: {
         (faqReturn) => {
           this.faqQuestion = faqReturn[0].FaqQuestion;
           this.faqAnswer = faqReturn[0].FaqAnswer;
- //           console.log('after playerReturn: ', this.firstName, this.lastName, this.displayName, this.email)
         })
     },
 

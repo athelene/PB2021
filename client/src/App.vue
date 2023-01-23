@@ -1,6 +1,6 @@
 <template>
   <v-app class="appBackground">
-    <Nav />
+    <Nav  />
     <v-main  class="appBackground" >
       <router-view/>
     </v-main>
@@ -17,6 +17,12 @@ export default {
   data: () => ({
     //
   }),
+
+  computed: {
+  user(){
+    return this.$store.state.user
+    }    
+  },
 };
 </script>
 

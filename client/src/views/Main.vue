@@ -1,33 +1,38 @@
 <template>
-  <div >
+  <div  >
 
     <div v-for="day in days1" :key="day.ID" >
+
   <v-row justify="center">
       <v-card class="pink lighten-5 mx-auto mt-3 ml-3 mr-3"  width="65%">
         <v-card-title>
-    <v-row class="mt-5">{{day.DayOfWeek}}, {{day.gameDate}} AM       
+         
+    <v-row class="mt-5">{{day.gameDate}} AM       
       <v-btn icon @click="openWeather(day.ID, 'A')">        
           <v-img
             max-height="50"
             max-width="50"
             :src="day.am1Icon"
-          ></v-img></v-btn></v-row>  
+          ></v-img></v-btn>
+          <!-- <v-btn v-if="day.ID === 1 || day.ID === 2">Invite Friends</v-btn> -->
+          </v-row>  
         <br />
           <div v-if="seeAmWeather===day.ID">
            <h6> 8:00 am - Temp: {{day.am1Temp}}, Wind: {{day.am1Wind}}, Rain: {{day.am1Rain}}%, Snow: {{day.am1Snow}}%</h6>
            <h6> 10:00 am - Temp: {{day.am2Temp}}, Wind: {{day.am2Wind}}, Rain: {{day.am2Rain}}%, Snow: {{day.am2Snow}}%</h6>
           </div>
         </v-card-title>
+        <p class="MorningTitle">{{day.DayOfWeek}} Morning</p>
         <v-card-text class="mb-1">
-
-      <Day  v-bind:gameDate="day.gameDate" v-on:update-games="setDay1" />
+          
+      <Day  v-bind:gameDate="day.gameDate" v-bind:gameID="day.ID" v-on:update-games="setDay1" />
         </v-card-text>
       </v-card>
       </v-row>
-      <v-row justify="center" class="mt-2 mb-5">
+      <v-row justify="center" class="mt-5 mb-5">
       <v-card class="blue lighten-5 mx-auto mb-5 mt-1 ml-3 mr-3"  width="65%">
         <v-card-title>
-    <v-row >{{day.DayOfWeek}}, {{day.gameDate}} PM
+    <v-row >{{day.gameDate}} PM
        <v-btn icon @click="openWeather(day.ID, 'P')">          
           <v-img
             max-height="50"
@@ -40,9 +45,10 @@
            <h6> 6:00 pm - Temp: {{day.niteTemp}}, Wind: {{day.niteWind}}, Chance of rain: {{day.niteRain}}, Snow: {{day.niteSnow}}%</h6>
           </div>
         </v-card-title>
+        <p class="EveningTitle">{{day.DayOfWeek}} Afternoon</p>
         <v-card-text class="mb-5">
-
-      <Afternoon v-bind:gameDate="day.gameDate" v-on:update-games="setDay1" />
+          
+      <Afternoon v-bind:gameDate="day.gameDate" v-bind:gameID="day.ID" v-on:update-games="setDay1" />
 
         </v-card-text>
       </v-card>
@@ -83,14 +89,17 @@ export default ({
   },
 
   mounted (){
- //   this.setDay1();
+  console.log('user is: ', this.user)
+   if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.getWeather();
 
   },
 
 computed: {
   user(){
-    return this.$store.state.user
+    return this.$store.state.user.user
     }    
   },
 
@@ -112,7 +121,6 @@ computed: {
         day = '0' + day;
 
     var dow = d.getDay();
-  //  console.log(dow)
     var dayofweek = '';
     switch(dow) {
       case 0:
@@ -166,12 +174,10 @@ computed: {
       var dayObj = {"ID": i, "gameDate": dayItem, "DayOfWeek": dayofweek}
       this.days1.push(dayObj);}
     }
-        console.log('days1 is: ', this.days1)
      }
    ,
 
     async getWeather() {
-    //  console.log('starting weather in main')
         const params = {
           key: '9a9a5cdaf4164cb99de181002210712',
           q: '66061',
@@ -179,12 +185,9 @@ computed: {
           aqi: 'no', 
           alerts: 'no'
         }
-  //    console.log('weather params are: ', params)
       await axios.get('https://api.weatherapi.com/v1/forecast.json', {params})
       .then((weather) => {
-  //      console.log('main weather is: ', weather);
         this.weather = weather
-  //     console.log('this.weather is: ', this.weather)
       })
       .then(() => {
         this.setDay1();
@@ -216,6 +219,11 @@ computed: {
 </script>
 
 <style scoped>
-
+.MorningTitle {
+  font-size: 1.5em;
+}
+.EveningTitle {
+  font-size: 1.5em;
+}
 </style>
 

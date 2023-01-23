@@ -2,7 +2,6 @@
 <template>
 
   <nav>
-
          <v-app-bar app class="orange darken--3" > 
         <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer">
         </v-app-bar-nav-icon>
@@ -22,11 +21,12 @@
           <p class="yellow--text" v-if="user.UserID > 0">Welcome {{user.UserDisplayName}}</p>
           <p @click="goToRoute('main')">Home</p>
           <p @click="goToRoute('players')">Players</p>
+          <p @click="goToRoute('friends')">Friends</p>
           <p @click="goToRoute('eventlist')">Events</p>
           <p @click="goToRoute('Faq')">Frequently Asked Questions</p>
-          <p @click="goToRoute('invitations')">Invitations</p>
-            <a href="./assets/static/Rules.pdf" target="blank" class="rulesLink">Rules</a>
-            </a>
+          <p @click="goToRoute('invitations')">People Invited to App</p>
+            <a href="./assets/static/Rules.pdf" target="blank" class="rulesLink">Rules</a><BR/><BR/>
+            <a href="./assets/static/PickleballApp.pdf" target="blank" class="rulesLink">App Documentation</a>
           <p @click="logout()" class="mt-4">Logout</p>
       </v-navigation-drawer>
       
@@ -51,8 +51,9 @@ export default {
         
   },
   mounted() {
+    console.log('nav store is: ', this.$store.state.user.user)
     this.setRulesRoute();
-//    console.log('user is: ', this.user)
+
   },
 
   
@@ -63,10 +64,8 @@ export default {
       },
 
       logout() {
- //       console.log('write logout');
         sessionStorage.clear();
         this.$store.dispatch('logout');
- //       console.log('this.$store.state.user is:', this.$store.state.user)
         window.location.replace('/');
       },
 

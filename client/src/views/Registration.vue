@@ -187,9 +187,13 @@ import EventService from '../Services/EventServices'
       }
     },
 
+    mounted (){
+   console.log('running registration.vue')
+
+  },
+
   methods: {
     async register() {
-//      console.log('inlogin.vue, starting register ')
       var areaCode = this.phone.substr(0, 3)
       var prefixCode = this.phone.substr(3,3)
       var phoneLine = this.phone.substr(6,4)
@@ -199,7 +203,6 @@ import EventService from '../Services/EventServices'
           if (registerReturn === 'invalid') {
             this.regError = "Invalid Invitation Code with this Email Address."
           } else {
-//            console.log('registered', registerReturn)
             this.$router.push("/")
           }
             

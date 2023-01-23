@@ -34,6 +34,78 @@
     </v-expansion-panel>
   </v-expansion-panels>
     </v-card-text>
+
+      <!--start of notes section-->
+      <v-expansion-panels v-if="noteCount > 0">
+    <v-expansion-panel    >
+      <v-expansion-panel-header>
+       <h3 >{{noteCount}} Note(s)</h3>
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        <div v-for="note in noteList" :key="note.noteID" class="mt-2">
+          {{note.PlayerName}} - {{note.NoteDateDisp}}: {{note.NoteText}} 
+          <v-btn small icon v-if="note.PlayerID === user.user.UserID" @click="deleteNote(note.NoteID)">
+            <v-icon>mdi-trash-can-outline</v-icon>
+          </v-btn>
+        </div>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
+    <v-dialog
+      v-model="noteDialog"
+      persistent
+      max-width="600px"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="orange"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Add Event Note
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-text>
+          <span class="text-h4">Add event note</span> 
+        </v-card-text>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="12"
+                md="12"
+              >
+        <v-textarea
+          v-model="newNoteText"
+          label="Your note"
+        ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="noteDialog = false"
+          >
+            Close
+          </v-btn>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="addEventNote()"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  <!--end of notes section-->
     <v-card-actions>
       <v-btn small @click="acceptRsvp()" v-if="eventStatus===false" class="orange white--text">Accept</v-btn>
       <v-btn small @click="cancelRsvp()" v-if="eventStatus===true" class="orange white--text">Cancel</v-btn>
@@ -58,7 +130,11 @@ export default {
     attendees: [],
     attendeesCount: 0,
     event: [],
-    eventStatus: false
+    eventStatus: false,
+    noteList: [],
+    noteCount: 0,
+    noteDialog: false,
+    newNoteText: '',
   }),
   
   computed: {
@@ -69,23 +145,20 @@ export default {
   },
 
   mounted (){
- //     console.log('incoming eventID is: ', this.eventID)
+    console.log('user is: ', this.user.user.UserID)
     this.getEvent();
     this.getEventStatus();
     this.getAttendees();
+    this.getEventNotes();
   },
 
   methods: {
 
     async getEvent() {
-  //    console.log(' starting getEvent')
       await EventService.getEvent(this.eventID)
       .then(
         (event => {
-//            console.log('event back from ES is: ', event[0])
           this.event = event[0];
-//          console.log('this.event is: ', this.event)
-
         })
       );
     },
@@ -98,20 +171,15 @@ export default {
       );
     },
     async getEventStatus() {
-  //    console.log(' starting getEvent')
       await EventService.getEventStatus(this.eventID, this.user.user.UserID)
       .then(
         (eventStatus => {
-//            console.log('event back from ES is: ', eventStatus)
           this.eventStatus = eventStatus;
-//          console.log('this.eventStatus is: ', this.eventStatus)
-
         })
       );
     },
 
     async acceptRsvp() {
-  //    console.log(' starting acceptRsvp')
       await EventService.acceptRsvp(this.eventID, this.user.user.UserID)
       .then(
         (() => {
@@ -123,7 +191,6 @@ export default {
     },
 
     async cancelRsvp() {
-  //    console.log(' starting cancelRsvp')
       await EventService.cancelRsvp(this.eventID, this.user.user.UserID)
       .then(
         (() => {
@@ -135,19 +202,46 @@ export default {
     },
 
     async getAttendees() {
-  //    console.log(' starting getEvent')
       await EventService.getAttendees(this.eventID)
       .then(
         (attendees => {
- //           console.log('event back from ES is: ', attendees)
           this.attendees = attendees;
           this.attendeesCount = attendees.length;
-//          console.log(attendees.length, this.attendeesCount)
-//          console.log('this.attendees is: ', this.attendees)
-
         })
       );
     },
+
+    async addEventNote() {
+      console.log('in event.vue addEventNote user is: ', this.user.user.UserID)
+       await EventService.addEventNote(this.eventID, this.user.user.UserID, this.newNoteText)
+      .then(
+        (() => {
+            this.newNoteText = '';
+            this.noteDialog = false;
+            this.getEventNotes();
+        })
+      );
+   },
+
+          async deleteNote(noteID) {
+       await EventService.deleteEventNote(noteID)
+      .then(
+        (() => {
+            this.getEventNotes();
+        })
+      );
+   },
+
+    async getEventNotes() {
+      await EventService.getEventNotes(this.eventID)
+      .then(
+        (notes => {
+          this.noteList = notes.recordset;
+          this.noteCount = notes.recordset.length;
+        })
+      );
+    },
+
 
   }
 

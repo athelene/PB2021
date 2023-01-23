@@ -88,27 +88,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-        <!-- <v-card 
-            class="mx-auto mb-5 mt-3 cardBackground"
-            max-width="344"
-            elevation="2"
-         v-for="event in events" :key="event.EventID">
-         <v-card-Title>{{event.EventDate}} -- {{event.EventTitle}}</v-card-Title>
-         <v-card-text>
-           <p>Hosted by: <a :href="'mailto:' + event.UserEmail">{{event.EventHostess}}</a>, 
-             <a :href="'tel:' + event.userPhone">{{event.userPhone}}</a></p>
-           <p>Time: {{event.EventTime}}</p>
-           <p>Location: {{event.EventLocation}}</p>
-           <p>Details: {{event.EventDetails}}</p>
-         </v-card-text>
-         <v-card-actions>
-           <v-btn small v-if="!rsvpStatus">Accept</v-btn>
-           <v-btn small v-if="rsvpStatus">Decline</v-btn>
-           <v-spacer></v-spacer>
-              <v-btn small icon v-if="event.UserID === user.user.UserID" @click="deleteEvent(event.EventID)">
-                <v-icon>mdi-trash-can-outline</v-icon></v-btn>
-         </v-card-actions>
-        </v-card> -->
+
  <Event v-for="event in events" :key="event.EventID" :eventID="event.EventID" @update-event="getEvents"/>
   </div>
 </template>
@@ -144,18 +124,20 @@ computed: {
   },
 
 mounted() {
+  console.log('eventlist is running')
+  if(!this.user || this.user.length === 0) {
+     this.$router.push('/')
+   }
     this.getEvents();
 
 },
 methods: {
 
     async getEvents() {
-//        console.log('starting getEvents in vue file')
       await EventService.getEvents()
       .then(
         (eventsReturn => {
           this.events= eventsReturn
-//            console.log('this.events is: ', this.events)
         })
       );
     },
@@ -166,8 +148,7 @@ methods: {
       } else {
         var bringing = null
       }
-  //    console.log('in Events.vue addEvent is: ', this.user)
-      await EventService.addEvent(this.newTitle, this.user.user.UserID, this.newLocation, this.newDate, this.newTime, bringing, this.newDetails)
+      await EventService.addEvent(this.newTitle, this.user.user.UserID, this.newLocation, this.newDate, this.newTime.slice(0,10), bringing, this.newDetails)
       .then(() => {
         this.getEvents();
         this.closeNewEventDialog();

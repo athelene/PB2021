@@ -4,11 +4,9 @@ var emailOps = require('./email');
 
 async function getEvents() {
     try{
-        console.log('running getEvents ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         let events = await myproc.execute("getEvents")
-        console.log('after proc runs, events is: ', events.recordset)
         return events.recordset;
     }
     catch (error) {
@@ -18,12 +16,10 @@ async function getEvents() {
 
 async function getAttendees(eventID) {
     try{
-        console.log('running getAttendees about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventID', sql.Int, eventID);
         let attendees = await myproc.execute("getAttendees")
-        console.log('after proc runs, getAttendees is: ', attendees.recordset)
         return attendees.recordset;
     }
     catch (error) {
@@ -33,7 +29,6 @@ async function getAttendees(eventID) {
 
 async function addEvent(eventTitle, eventHostess, eventLocation, eventDate, eventTime, inviteBringing, eventDetails) {
     try{
-        console.log('running addEvent ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventTitle', sql.NVarChar(100), eventTitle);
@@ -44,7 +39,6 @@ async function addEvent(eventTitle, eventHostess, eventLocation, eventDate, even
         myproc.input('inviteBringing', sql.Int, inviteBringing);
         myproc.input('eventDetails', sql.NVarChar('MAX'), eventDetails);
         let newEvent = await myproc.execute("addEvent")
-        console.log('after proc runs, newEvent is: ', newEvent.recordset[0].Identity)
         emailOps.sendEventInvitation(newEvent.recordset[0].Identity)
         return newEvent.recordset;
     }
@@ -56,12 +50,10 @@ async function addEvent(eventTitle, eventHostess, eventLocation, eventDate, even
 async function deleteEvent(eventID) {
     try{
         await emailOps.sendEventCancel(eventID)
-        console.log('running deleteEvent ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventID', sql.Int, eventID);
         let deleteEvent = await myproc.execute("deleteEvent")
-        console.log('after proc runs, deleteEvent is: ', deleteEvent.recordset)
 
         return deleteEvent.recordset;
     }
@@ -72,12 +64,10 @@ async function deleteEvent(eventID) {
 
 async function getEvent(eventID) {
     try{
-        console.log('running deleteEvent ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventID', sql.Int, eventID);
         let getEvent = await myproc.execute("getEvent")
-        console.log('after proc runs, getEvent is: ', getEvent.recordset)
         return getEvent.recordset;
     }
     catch (error) {
@@ -87,13 +77,11 @@ async function getEvent(eventID) {
 
 async function getEventStatus(eventID, userID) {
     try{
-        console.log('running deleteEvent ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventID', sql.Int, eventID);
         myproc.input('userID', sql.Int, userID);
         let getEventStatus = await myproc.execute("getEventStatus")
-        console.log('after proc runs, getEventStatus is: ', getEventStatus.returnValue)
         if(getEventStatus.returnValue !== 0) {var status = true} else { var status = false}
         return status;
     }
@@ -104,7 +92,6 @@ async function getEventStatus(eventID, userID) {
 
 async function acceptRsvp(eventID, userID) {
     try{
-        console.log('running acceptRsvp ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventID', sql.Int, eventID);
@@ -119,13 +106,54 @@ async function acceptRsvp(eventID, userID) {
 
 async function cancelRsvp(eventID, userID) {
     try{
-        console.log('running cancelRsvp ,about to connect to sql');
         let pool = await sql.connect(config);
         var myproc = new sql.Request(pool);
         myproc.input('eventID', sql.Int, eventID);
         myproc.input('userID', sql.Int, userID);
         let cancelRsvp = await myproc.execute("cancelRsvp")
         return cancelRsvp;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function getEventNotes(eventID) {
+    try{
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('eventID', sql.Int, eventID)
+        let getEventNote = await myproc.execute("getEventNotes")
+        return getEventNote;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteEventNote(noteID) {
+    try{
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('noteID', sql.Int, noteID)
+        let deleteEventNote = await myproc.execute("deleteEventNote")
+        return deleteEventNote;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function addEventNote(userID, eventID, noteText) {
+    console.log('addEventNotes params in events.js are: ', userID, eventID, noteText)
+    try{
+        let pool = await sql.connect(config);
+        var myproc = new sql.Request(pool);
+        myproc.input('userID', sql.Int, userID)
+        myproc.input('eventID', sql.Int, eventID)
+        myproc.input('noteText', sql.NVarChar('max'), noteText)
+        let addEventNote = await myproc.execute("addEventNote")
+        return addEventNote;
     }
     catch (error) {
         console.log(error);
@@ -141,5 +169,8 @@ module.exports = {
     getAttendees: getAttendees,
     acceptRsvp: acceptRsvp,
     cancelRsvp: cancelRsvp,
+    addEventNote: addEventNote,
+    deleteEventNote: deleteEventNote,
+    getEventNotes: getEventNotes
 
 }

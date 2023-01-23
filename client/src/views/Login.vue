@@ -120,33 +120,27 @@ import EventService from '../Services/EventServices'
   methods: {
 
     async login() {
-//      console.log('in login.vue, starting login ')
-//      console.log('fields: ', this.email, this.password, 'going to run EventService.login')
+
       await (EventService.login(this.email, this.password))
       .then(
          (userInfo ) => {
-//          console.log('userInfo sent back after eventservice.login: ', userInfo)
           if (userInfo === false || userInfo === undefined || userInfo === 'Invalid Login') {
               this.message="Invalid login"
               this.tab = 0;
               this.loggedin = false
-//              console.log('message is: ', this.message, 'userInfo is: ', userInfo)
               return
           } else {
 
           this.$store.dispatch('login', userInfo);
           this.$set(this, "userInfo", userInfo);
-//            console.log('this is what user is after call to event', this.userInfo)
             this.loggedin = true
             }
 
         })
       .then(() => {
           if(this.loggedin === true) {
-//              console.log('post dispatch this.$store.user is: ', this.$store.state.user)
-//              console.log('and the computed value of user is: ', this.user)
+
               this.$router.push('Main') }
- //         console.log('message is: ', this.message)
       })   
     },
 
